@@ -1,3 +1,5 @@
+package test1;
+
 import java.util.Arrays;
 
 public class test_Perm2 {

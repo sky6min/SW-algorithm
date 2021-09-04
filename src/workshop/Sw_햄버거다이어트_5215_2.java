@@ -30,6 +30,9 @@ public class Sw_햄버거다이어트_5215_2 {
             }
 
             max = 0;
+
+            // tgtIdx == 3개를 골랐다면, -----------------------------> cal 1000을 넘긴다면,
+
             comb(0, 0,0);
 
             System.out.println("#"+ t + " " + max);
@@ -41,6 +44,7 @@ public class Sw_햄버거다이어트_5215_2 {
         // 호출될 때마다 조건 체크
         if( cal >L ) return;
 
+
         // 기저조건
         if( srcIdx == N) {
             //...
@@ -50,9 +54,9 @@ public class Sw_햄버거다이어트_5215_2 {
 
         // srcIdx 선택 O X
 
-        comb( srcIdx+1, point, cal);
         comb(srcIdx+1, point+src[srcIdx].p, cal + src[srcIdx].c );
 
+        comb( srcIdx+1, point, cal);
 
     }
 
