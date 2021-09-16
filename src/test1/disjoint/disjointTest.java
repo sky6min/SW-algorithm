@@ -31,3 +31,5 @@ public class disjointTest {
         return true;  // 같은 집합에 있지 않으므로 합침.
     }
 }
+
+
