@@ -71,7 +71,7 @@ public class BJ_말이되고픈원숭이_1600 {
             if( node.k == 0) continue;
 
             // 말 탐색(조건 : node.k > 0 )
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < 8; i++) {
                 int ny = node.y + hdy[i];
                 int nx = node.x + hdx[i];
                 if( ny < 0 || nx <0 || ny >= H || nx >= W || map[ny][nx] == 1 || visit[ny][nx][node.k-1]) continue;
