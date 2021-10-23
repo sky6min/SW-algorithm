@@ -1,5 +1,6 @@
 package basic;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class BASIC_Perm {
@@ -17,7 +18,6 @@ public class BASIC_Perm {
     static boolean[] select = new boolean[src.length];
 
 
-
     public static void main(String[] args) {
         perm(0);
         System.out.println(COUNT);
@@ -26,6 +26,9 @@ public class BASIC_Perm {
     static void perm(int tgtIdx) {
         // 기저 조건
         if(tgtIdx == tgt.length) {
+
+            //사이안좋은 애들 경우의 수 제외 return;
+
             // complete code!!
             // 순열 하나 완성!! = 문제에 맞는 추가 작업
             System.out.println(Arrays.toString(tgt));
