@@ -29,27 +29,25 @@ public class BJ_나무자르기_2805 {
         while(bottom<top) {
             int cut = (top + bottom) / 2;
             long res = 0;
-
             for(int i=0; i<n; i++) {
                 if(ary[i] - cut >= 0) {
-                    res += (ary[i] - cut);
-
+                    res += ary[i] - cut;
                 }
 
             }
 
             if(res >= m) {
                 bottom = cut+1;
-
+                continue;
             }
             if(res < m) {
                 top = cut;
-
+                continue;
             }
 
         }
 
-        System.out.println(bottom - 1);
+        System.out.println(bottom-1);
 
     }
 }
