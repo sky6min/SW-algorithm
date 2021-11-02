@@ -18,7 +18,7 @@ public class bj_Z_1074 {
         recur(0,0 ,(int) Math.pow(2, N) , (int) Math.pow(2, N), cnt);
         System.out.println(res);
     }
-
+    // ymin xmin ymax xmax cnt
     static void recur(int ymin, int xmin, int ymax, int xmax, int cnt) {
         if(ymax == r && xmax == c) {
             res = cnt;
