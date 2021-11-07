@@ -2,62 +2,84 @@ package test1.라인;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 public class line_재학생_1 {
-    static int from;
-    static int to[];
-    static char ary[];
-    static int N;
-    static int K;
-    static int res = 0;
+
+    static ArrayList<Integer> src = new ArrayList<Integer>();
+    static int K, result = 0;
+
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        K = Integer.parseInt(br.readLine());
+
         StringTokenizer st = new StringTokenizer(br.readLine());
-        N = Integer.parseInt(st.nextToken());
-        K = Integer.parseInt(st.nextToken());
-        to = new int[K];
-        ary = new char[N];
+        for(int i=0; st.hasMoreTokens(); i++) {
+            src.add(Integer.parseInt(st.nextToken()));
+        }
 
-        ary = br.readLine().toCharArray();
-
-
-        from = -1;
+        int start = 0;
+        int end = 0;
+        // 0 1 0 0 1 1 0  초기 start, end 값 할당
         int cnt = 0;
-        Arrays.fill(to, N-1);
-        for(int i=0; i<N; i++) {
-            if(cnt >= K) {
+        for(int i=0; i<src.size(); i++) {
+            if(cnt == 2) break;
+
+            if(src.get(i) == 1) {
+                if(start == 0) {
+                    start = i;
+                    cnt++;
+                }else {
+                    end = i;
+                    cnt++;
+                }
+            }
+        }
+        System.out.println(start);
+        System.out.println(end);
+
+        int endpt = 0;
+        for(int i=src.size()-1; i>=0; i--) {
+            if(src.get(i) == 1) {
+                endpt = i;
                 break;
             }
-            if(ary[i] == '1') {
-                to[cnt++] = i;
-            }
         }
+        System.out.println(endpt);
+        boolean cont = true;
+        int scnt = 0;
+        int ecnt = 0;
+        while(cont) {
 
-
-        for(int i=to[K-1]+1; i<N; i++) {
-            if(ary[i] == '1' || i == N-1) {
-                int front = to[0] - from - 1;
-                int back = 0;
-                if(i == N-1) {
-                    back = (i - to[K-1]);
-                }else {
-                    back = (i - to[K-1]) -1;
+            scnt = 1;
+            for(int i=start-1; i>=0; i--) {
+                if(src.get(i) == 1) {
+                    break;
                 }
-
-                int sum = (front +1) * (back + 1);
-                res += sum;
-
-                from = to[0];
-                for(int j = 0; j<K-1; j++) {
-                    to[j] = to[j+1];
-                }
-                to[K-1] = i;
+                scnt++;
             }
 
+            ecnt = 1;
+            for(int i=end+1; i<src.size(); i++) {
+                if(src.get(i) == 1) {
+
+                    start = end;
+                    end = i;
+                    break;
+                }
+                ecnt++;
+                if(i == src.size()-1) {
+                    cont = false;
+                }
+            }
+
+            result = result + (scnt * ecnt);
+
         }
 
-        System.out.println(res);
+        System.out.println(result);
     }
+
+
 }
