@@ -1,7 +1,5 @@
 package test1;
 
-import workshop.BJ_녹색옷젤다_4485;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -29,11 +27,11 @@ public class ssafyTest {
         N = Integer.parseInt(st.nextToken());
         V = Integer.parseInt(st.nextToken());
 
-        visited = new boolean[V];
-        al = new ArrayList[V];
-        dist = new int[V];
-        Arrays.fill(dist,Integer.MAX_VALUE);
-        for(int i=0; i<V; i++) {
+        visited = new boolean[100];
+        al = new ArrayList[100];
+        dist = new int[100];
+        Arrays.fill(dist, (int)Math.pow(10,9));
+        for(int i=0; i<100; i++) {
             al[i] = new ArrayList<>();
         }
         for(int i=0; i<N; i++) {
@@ -42,37 +40,40 @@ public class ssafyTest {
             int to = Integer.parseInt(st.nextToken());
             int cost = Integer.parseInt(st.nextToken());
             al[from].add(new Node(to,cost));
-
         }
 
         Dijkstra();
 
-        Node resDist[] = new Node[4];
-        for(int i=0; i<4; i++) {
+
+
+        Node resDist[] = new Node[5];
+        for(int i=0; i<5; i++) {
             resDist[i] = new Node();
         }
-        for(int i=1; i<4; i++) {
-            bus[i] += dist[i];
+        for(int i=2; i<5; i++) {
+            bus[i-1] += dist[i];
             resDist[i].n = i;
-            resDist[i].cost = bus[i];
+            resDist[i].cost = bus[i-1];
         }
 
-        for(int i=0; i<V; i++) {
-            System.out.print(dist[i]+" ");
-        }
-        System.out.println();
         Arrays.sort(resDist);
-        System.out.print(resDist[1].n + " " + resDist[1].cost);
+        if(resDist[2].cost >= (int)Math.pow(10,9)) {
+            System.out.println(-1);
+        }else{
+            System.out.print(resDist[2].n + " " + resDist[2].cost);
+        }
+
     }
     private static void Dijkstra() {
-        dist[0] = 0;
-        pq.offer(new Node(0, 0));
+        dist[1] = 0;
+
+        pq.offer(new Node(1, 0));
         while(!pq.isEmpty()) {
             Node cur = pq.poll();
             visited[cur.n] = true;
             for(int i=0; i<al[cur.n].size(); i++) {
                 Node next = al[cur.n].get(i);
-                if(!visited[next.n]) {
+                if(!visited[next.n] ) {
                     pq.offer(next);
                 }
                 if(dist[next.n] > dist[cur.n] + next.cost) {
