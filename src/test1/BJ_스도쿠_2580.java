@@ -1,92 +1,83 @@
 package test1;
 
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.nio.Buffer;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
 
-public class BJ_스도쿠_2580{
+public class BJ_스도쿠_2580 {
 
-    public static int[][] arr = new int[9][9];
-
-    public static void main(String[] args) {
-
-        Scanner in = new Scanner(System.in);
-
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
-                arr[i][j] = in.nextInt();
+    static int map[][] = new int[9][9];
+    static ArrayList<Node> zero = new ArrayList<>();
+    static boolean finish = false;
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        for(int i=0; i<9; i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            for(int j=0; j<9; j++) {
+                map[i][j] = Integer.parseInt(st.nextToken());
+                if(map[i][j] == 0) {
+                    zero.add(new Node(i,j));
+                }
             }
         }
 
-        sudoku(0, 0);
+        dfs(0);
 
     }
+    static void dfs(int idx) {
+        if(finish) return;
 
-    public static void sudoku(int row, int col) {
+        boolean visited[] = new boolean[10];
 
-        // 해당 행이 다 채워졌을 경우 다음 행의 첫 번째 열부터 시작
-        if (col == 9) {
-            sudoku(row + 1, 0);
+        if(idx == zero.size()) {
+            finish = true;
+            for(int i=0; i<9; i++) {
+                for(int j=0; j<9; j++) {
+                    System.out.print(map[i][j]+ " ");
+                }
+                if(i != 8) System.out.println();
+            }
             return;
         }
+        int y = zero.get(idx).y;
+        int x = zero.get(idx).x;
 
-        // 행과 열이 모두 채워졌을 경우 출력 후 종료
-        if (row == 9) {
-            for (int i = 0; i < 9; i++) {
-                for (int j = 0; j < 9; j++) {
-                    System.out.print(arr[i][j] + " ");
-                }
-                System.out.println();
-            }
-
-            // 출력 뒤 시스템을 종료한다.
-            System.exit(0);
+        for(int i=0; i<9; i++) {
+            if(map[y][i] != 0) visited[map[y][i]] = true;
         }
 
-        // 만약 해당 위치가 0 이라면 1부터 9까지 중 가능한 수 탐색
-        if (arr[row][col] == 0) {
-            for (int i = 1; i <= 9; i++) {
-                // i 값이 중복되지 않는지 검사
-                if (possibility(row, col, i)) {
-                    arr[row][col] = i;
-                    sudoku(row, col + 1);
-                }
-            }
-            arr[row][col] = 0;
-            return;
+        for(int j=0; j<0; j++) {
+            if(map[j][x] != 0) visited[map[j][x]] = true;
         }
 
-        sudoku(row, col + 1);
+        int ay = (y / 3) * 3;
+        int ax = (x / 3) * 3;
 
+        for(int i=ay; i<ay+3; i++) {
+            for(int j=ax; j<ax+3; j++) {
+                if(map[i][j] != 0) visited[map[i][j]] = true;
+            }
+        }
+
+        for(int i=1; i<10; i++) {
+            if(finish) return;
+
+            if(!visited[i]) {
+                map[y][x] = i;
+                dfs(idx+1);
+            }
+        }
     }
 
-    public static boolean possibility(int row, int col, int value) {
+    static class Node{
+        int y;
+        int x;
 
-        // 같은 행에 있는 원소들 중 겹치는 열 원소가 있는지 검사
-        for (int i = 0; i < 9; i++) {
-            if (arr[row][i] == value) {
-                return false;
-            }
+        public Node(int y, int x) {
+            this.y = y;
+            this.x = x;
         }
-
-        // 같은 열에 있는 원소들 중 겹치는 행 원소가 있는지 검사
-        for (int i = 0; i < 9; i++) {
-            if (arr[i][col] == value) {
-                return false;
-            }
-        }
-
-        // 3*3 칸에 중복되는 원소가 있는지 검사
-        int set_row = (row / 3) * 3; // value가 속한 3x3의 행의 첫 위치
-        int set_col = (col / 3) * 3; // value가 속한 3x3의 열의 첫 위치
-
-        for (int i = set_row; i < set_row + 3; i++) {
-            for (int j = set_col; j < set_col + 3; j++) {
-                if (arr[i][j] == value) {
-                    return false;
-                }
-            }
-        }
-
-        return true; // 중복되는 것이 없을 경우 true 반환
     }
-
 }
