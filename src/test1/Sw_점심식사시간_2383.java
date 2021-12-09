@@ -16,9 +16,9 @@ public class Sw_점심식사시간_2383 {
     static int src[] = {0, 1};
 
     // 우선순위 큐1
-    static PriorityQueue<Integer> pq1 = new PriorityQueue<>();
+    static Queue<Integer> pq1 = new LinkedList<>();
     // 우선순위 큐2
-    static PriorityQueue<Integer> pq2 = new PriorityQueue<>();
+    static Queue<Integer> pq2 = new LinkedList<>();
 
     static Queue<Integer> q1 = new LinkedList<>();
     static Queue<Integer> q2 = new LinkedList<>();
@@ -52,7 +52,8 @@ public class Sw_점심식사시간_2383 {
             tgt = new int[tgtIdx];
             // 중복 순열로 나누기
             comb(0);
-            System.out.println(res);
+            res = res + 1;
+            System.out.println("#" + t + " " + res);
         }
 
     }
@@ -82,6 +83,7 @@ public class Sw_점심식사시간_2383 {
             // 1초가 지날때마다 pq의
             int cnt = 0;
             int door_cnt = 0;
+            int door_cnt2 = 0;
             while(!pq1.isEmpty() || !pq2.isEmpty() || !q1.isEmpty() || !q2.isEmpty()) {
                 cnt++;
 
@@ -117,7 +119,7 @@ public class Sw_점심식사시간_2383 {
                     int a = q2.poll();
                     a = a-1;
                     if(a == -door[1].time) {
-                        door_cnt--;
+                        door_cnt2--;
                         continue;
                     }else {
                         q2.add(a);
@@ -128,19 +130,20 @@ public class Sw_점심식사시간_2383 {
                 for (int i = 0; i < pq2_size; i++) {
                     int a = pq2.poll();
                     a = a-1;
-                    if(a <= 0 && door_cnt < 3) {
+                    if(a <= 0 && door_cnt2 < 3) {
                         q2.add(0);
-                        door_cnt++;
+                        door_cnt2++;
                     }else {
                         pq2.add(a);
                     }
-                    // if pq1의 요소값이 0이 되면
+                    // if pq1의 요소값이 0이 되면 0 0 0 1 0 1
                     // q1 에 추가
                 }
 
 
 
             }
+            //System.out.println(" : " + cnt);
             res = Math.min(res,cnt);
 
            return;
