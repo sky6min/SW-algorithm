@@ -30,6 +30,7 @@ public class BJ_구슬탈출2_13460 {
         blueVisited  = new boolean[N][M];
 
         for (int i = 0; i < N; i++) {
+            int nnn;
             char[] temp = br.readLine().toCharArray();
             for (int j = 0; j < M; j++) {
                 if(temp[j] == 'B' ) {
