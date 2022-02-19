@@ -29,7 +29,7 @@ public class BASIC_Comb_RC {
         tgt[tgtIdx] = src[srcIdx];
 
         // YES
-        comb(srcIdx+1, tgtIdx + 1);
+        comb(srcIdx + 1, tgtIdx + 1);
 
         // NO
         comb(srcIdx + 1, tgtIdx);

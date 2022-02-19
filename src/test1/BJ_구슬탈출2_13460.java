@@ -68,8 +68,8 @@ public class BJ_구슬탈출2_13460 {
                 if(map[dy[i] + red.y][dx[i] + red.x] == '#') {
                     break;
                 }
-
-                if()
+//
+//                if()
 
 
 
