@@ -73,6 +73,7 @@ public class BJ_인내의도미노장인호석_20165 {
 
         }
 
+        // 출력부
         System.out.println(res);
         for(int i=1; i<=N; i++) {
             for(int j=1; j<=M; j++) {
@@ -84,26 +85,31 @@ public class BJ_인내의도미노장인호석_20165 {
 
     static void dfs(int row, int col, int size ,int dir) {  // 세로칸, 가로칸, 방향
 
+        // row, col 현재 위치에 대한 처리
         if(visited[row][col] == 'S') {
             res++;
         }
         visited[row][col] = 'F';
 
+        // 다음위치 판단 (다음값으로 갈수 있는가에 대한 기저조건)
         if(row+dy[dir] > N || row+dy[dir] <= 0 || col+dx[dir] > M || col + dx[dir] <= 0) return;
-        // 다음 값 정리
+
+        // 길이가 짧다 다음으로 못간다. (다음값으로 갈수 있는가에 대한 기저조건)
         if(size-1 == 0) {
             return;
         }
-        // 교체조건
+
+        // 교체조건 2 2 2-1 2 다음 위치를 (설정)해주는 처리
         if(size-1 < map[row+dy[dir]][col+dx[dir]] && visited[row+dy[dir]][col+dx[dir]] == 'S')   // 다음값이 현재값-1 보다 크면 다음값으로 교체
         {
             size = map[row+dy[dir]][col+dx[dir]];
+            // 다음 dfs로 이동
             dfs(row+dy[dir], col+dx[dir], size, dir);
         }else{
+            // 다음 dfs로 이동
             dfs(row+dy[dir], col+dx[dir], size-1, dir);
         }
 
-        // 다음 dfs로 이동
 
     }
 }

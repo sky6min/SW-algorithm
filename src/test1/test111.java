@@ -14,6 +14,7 @@ public class test111 {
         System.out.println(words[2]);
         System.out.println(words[3]);
         System.out.println(words[4]);
-
+        res = "asda";
+        System.out.println(res);
     }
 }
