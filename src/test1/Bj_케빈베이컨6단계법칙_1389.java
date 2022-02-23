@@ -40,10 +40,9 @@ public class Bj_케빈베이컨6단계법칙_1389 {
             while(!queue.isEmpty()) {
                 Node node = queue.poll();
                 visited[node.cur] = true;
-                res += node.depth;
-                for(int j=0; j<al[node.cur].size(); j++) {
+                res += node.depth;  // 현재값 처리
+                for(int j=0; j<al[node.cur].size(); j++) {   // 다음값 처리
                     if(visited[al[node.cur].get(j).cur]) continue;
-                    visited[al[node.cur].get(j).cur] = true;
                     Node newNode = new Node(node.depth+1, al[node.cur].get(j).cur);
                     queue.offer(newNode);
                 }
