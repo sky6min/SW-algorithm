@@ -13,7 +13,7 @@ public class Bj_토마토_7569 {
     static int dx[] = {1, 0, -1, 0, 0, 0};
     static int dy[] = {0, 1, 0, -1, 0, 0};
     static int dz[] = {0, 0, 0,  0, 1,-1};
-
+    static int res = 0;
     static Queue<Node> queue = new LinkedList<Node>();
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -27,8 +27,8 @@ public class Bj_토마토_7569 {
 
         for(int h = 0; h < H; h++) {
             for(int m = 0; m < M; m++) {
+                st = new StringTokenizer(br.readLine());
                 for(int n = 0; n < N; n++) {
-                    st = new StringTokenizer(br.readLine());
                     int value = Integer.parseInt(st.nextToken());
                     map[h][m][n] = value;
                     if(value == 1) {
@@ -41,14 +41,33 @@ public class Bj_토마토_7569 {
 
         while(!queue.isEmpty()) {
             Node node = queue.poll();
+            res = node.val;
             for (int i = 0; i < 6; i++) {
                 int rx = node.x + dx[i];
                 int ry = node.y + dy[i];
                 int rz = node.z + dz[i];
-                if(rx )
+                if(rx < 0 || ry < 0 || rz < 0 || rx >= N || ry >= M || rz >= H ) continue;
+                if(map[rz][ry][rx] == 1 || map[rz][ry][rx] == -1) continue;
+
+                map[rz][ry][rx] = 1;
+                int value = node.val + 1;
+                Node n = new Node(rx,ry,rz,value);
+                queue.add(n);
             }
         }
 
+        for(int h = 0; h < H; h++) {
+            for(int m = 0; m < M; m++) {
+                for(int n = 0; n < N; n++) {
+
+                    if(map[h][m][n] == 0) {
+                        res = -1;
+                    }
+                }
+            }
+        }
+
+        System.out.println(res);
     }
 
     static class Node{
