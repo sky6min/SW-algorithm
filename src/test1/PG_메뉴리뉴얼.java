@@ -1,10 +1,10 @@
 package test1;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
-import java.util.PriorityQueue;
 
-public class PG_연습장 {
+public class PG_메뉴리뉴얼 {
 
 
 
@@ -22,54 +22,76 @@ public class PG_연습장 {
     static int tgtlength;
     static ArrayList<String> al = new ArrayList<>();
 
-    static ArrayList<Node> nl;
+    static ArrayList<Node> nl[];
 
     public static ArrayList<String> solution(String[] orders, int[] course) {
-        String[] answer = {};
-        int slength = 0;
-        for(int i=0; i< orders.length; i++) {
-            char[] order = orders[i].toCharArray();
-            for(int j=0; j<order.length; j++) {
-                if(!alphabet[order[j]]) {
-                    alphabet[order[j]] = true;
-                    slength++;
-                }
-            }
-
+        nl = new ArrayList[course.length];
+        for(int k=0; k<course.length; k++) {
+            nl[k] = new ArrayList<>();
         }
 
-        src = new char[slength];
+        for(int i=0; i<orders.length; i++) {
+            src = orders[i].toCharArray();
+            srclength = src.length;
 
-        for(int i=0; i<200; i++) {
-            if(alphabet[i]) {   // alphabet이 존재한다면
-                src[srclength++] = (char)i;
+            for(int j=0; j< course.length; j++) {
+                tgtlength = course[j];
+                tgt = new char[tgtlength];
+
+                comb(orders,j,0,0);
+
             }
         }
-
         for(int i=0; i< course.length; i++) {
-            nl = new ArrayList<>();
-            tgtlength = course[i];
-            tgt = new char[tgtlength];
-            comb(orders,0,0);
-
             int max = Integer.MIN_VALUE;
-            for(int j=0; j< nl.size(); j++) {
-                max = Math.max(max, nl.get(j).cnt);
+            for(int j=0; j< nl[i].size(); j++) {
+                max = Math.max(max, nl[i].get(j).cnt);
             }
 
-            for(int j=0; j< nl.size(); j++) {
-                Node node = nl.get(j);
+            for(int j=0; j< nl[i].size(); j++) {
+                Node node = nl[i].get(j);
                 if(max == node.cnt) {
-                    al.add(node.val);
+
+                    char[] str = node.val.toCharArray();
+                    Arrays.sort(str);
+                    String s = new String(str);
+                    al.add(s);
                 }
             }
         }
+
         Collections.sort(al);
+
         return al;
     }
 
-    static void comb(String[] orders,int srcIdx, int tgtIdx) {
+    static void comb(String[] orders,int idx,int srcIdx, int tgtIdx) {
         if(tgtIdx == tgtlength) {
+
+            int dup = 0;
+            String s = new String(tgt);
+            for(int i=0; i<nl[idx].size(); i++) {
+                Node node = nl[idx].get(i);
+                char[] ch1 = s.toCharArray();
+                char[] ch2 = node.val.toCharArray();
+                int cnt = 0;
+                for(int j=0; j<ch1.length; j++) {
+                    for(int k=0; k<ch2.length; k++) {
+                        if(ch1[j] == ch2[k]) {
+                            cnt++;
+                        }
+                    }
+                }
+                if(cnt == ch1.length) {
+                    dup = 1;
+                }
+
+            }
+
+            if(dup == 1) return;
+
+
+
             int cnt = 0;
             for(int i = 0; i < orders.length; i++) {
                 char[] temp = orders[i].toCharArray();
@@ -91,18 +113,20 @@ public class PG_연습장 {
                 String str = new String(tgt);
                 node.val = str;
                 node.cnt = cnt;
-                nl.add(node);
+
+                nl[idx].add(node);
             }
             return;
         }
 
         if(srcIdx == srclength) {
+
             return;
         }
 
         tgt[tgtIdx] = src[srcIdx];
-        comb(orders,srcIdx+1, tgtIdx+1);
-        comb(orders,srcIdx+1, tgtIdx);
+        comb(orders, idx,srcIdx+1, tgtIdx+1);
+        comb(orders, idx,srcIdx+1, tgtIdx);
 
     }
 
