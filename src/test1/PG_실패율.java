@@ -52,8 +52,8 @@ public class PG_실패율 {
     }
 
     static class Node implements Comparable<Node> {
-        int N;
-        double F;
+        int N;    // 라운드 단계
+        double F;  // 실패율
 
         public int compareTo(Node obj) {
             if(this.F == obj.F) {
