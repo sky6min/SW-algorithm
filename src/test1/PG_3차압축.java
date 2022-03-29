@@ -2,7 +2,6 @@ package test1;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 
 public class PG_3차압축 {
 
