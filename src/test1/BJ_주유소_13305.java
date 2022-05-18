@@ -20,7 +20,7 @@ public class BJ_주유소_13305 {
 
         long res = 0;
         for (int i = 0; i < N - 1; i++) {
-            double e = pq.peek();
+            long e = pq.peek();
             res += e * Long.parseLong(cost[i]);
             pq.offer(Long.parseLong(edge[i+1]));
         }
